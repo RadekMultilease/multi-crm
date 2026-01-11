@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: library/busybox
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "64Mi"
+  limits:
+    cpu: "200m"
+    memory: "256Mi"
