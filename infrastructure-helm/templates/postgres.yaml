@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          image: {{ .Values.image.repository | default "postgres" }}:{{ .Values.image.tag | default "15-alpine" }}
           env:
             - name: POSTGRES_USER
               value: "postgres"
