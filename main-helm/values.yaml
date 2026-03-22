@@ -28,6 +28,9 @@ apps:
       repository: radeczu/apitestapp
       tag: latest
     service:
-      port: 2137
+      type: ClusterIP
+      ports:
+        - name: api
+          port: 2137
     ingress:
       enabled: false
