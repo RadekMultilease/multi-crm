@@ -1,0 +1,34 @@
+{{- $config := .Values.apps.frontend -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: {{ $config.image.replicas }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: angular-container
+        image: "{{ $config.image.repository }}:{{ $config.image.tag }}"
+        ports:
+        {{- range $portConfig := $config.service.ports }}
+        - name: {{ $portConfig.name }}
+          containerPort: {{ $portConfig.port }}
+        {{- end }}
+        volumeMounts:
+        - name: app-data
+          mountPath: /app
+        resources:
+          {{- toYaml $config.resources | nindent 10 }}
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: frontend-pvc

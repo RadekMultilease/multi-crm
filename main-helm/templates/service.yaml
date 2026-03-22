@@ -1,0 +1,18 @@
+{{- range $appName, $appConfig := .Values.apps }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $appName }}-service
+spec:
+  selector:
+    app: {{ $appName }}
+  type: {{ $appConfig.service.type | default "ClusterIP" }}
+  ports:
+  {{- range $portConfig := $appConfig.service.ports }}
+  - name: {{ $portConfig.name }}
+    protocol: TCP
+    port: {{ $portConfig.port }}
+    targetPort: {{ $portConfig.name }}
+  {{- end }}
+---
+{{- end }}

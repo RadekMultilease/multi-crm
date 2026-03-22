@@ -1,17 +1,33 @@
-replicaCount: 1
+apps:
+  frontend:
+    image:
+      repository: radeczu/angular-sandbox
+      tag: arm64
+      replicas: 1
+    service:
+          type: LoadBalancer
+          ports:
+            - name: status
+              port: 8080
+            - name: dev
+              port: 4200
+    persistence:
+      enabled: true
+      claimName: frontend-pvc
+    ingress:
+      enabled: true
+      host: dev.crm.pi
+      ingressPort: 4200
+      uploadLimit: "50m"
+    resources:
+      requests: { cpu: "100m", memory: "256Mi" }
+      limits: { cpu: "500m", memory: "512Mi" }
 
-image:
-  repository: radeczu/apitestapp
-  tag: latest
-
-service:
-  type: LoadBalancer
-  port: 2137
-
-resources:
-  requests:
-    cpu: "50m"
-    memory: "64Mi"
-  limits:
-    cpu: "100m"
-    memory: "128Mi"
+  apitestapp:
+    image:
+      repository: radeczu/apitestapp
+      tag: latest
+    service:
+      port: 2137
+    ingress:
+      enabled: false
