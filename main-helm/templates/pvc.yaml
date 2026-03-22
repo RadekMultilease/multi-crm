@@ -1,0 +1,15 @@
+{{- range $appName, $appConfig := .Values.apps }}
+{{- if and $appConfig.persistence $appConfig.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $appConfig.persistence.claimName | default (printf "%s-pvc" $appName) }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $appConfig.persistence.size | default "1Gi" }}
+---
+{{- end }}
+{{- end }}

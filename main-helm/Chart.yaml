@@ -2,5 +2,5 @@ apiVersion: v2
 name: main-helm
 description: The main helm chart with frontend and backend apps
 type: application
-version: 1.0.1
-appVersion: "2.0.1"
+version: 1.0.2
+appVersion: "2.0.2"
