@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: postgres-db
 spec:
+  externalTrafficPolicy: Local
   selector:
     app: postgres
   ports:
