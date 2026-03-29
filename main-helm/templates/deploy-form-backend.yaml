@@ -1,4 +1,4 @@
-{{ $config := .Values.apps.form-backend }}
+{{- $config := .Values.apps.formBackend -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,4 +24,4 @@ spec:
             containerPort: {{ $portConfig.port }}
         {{- end }}
         resources:
-{{ toYaml $config.resources | nindent 10 }}
+{{ toYaml $FormBackend.resources | nindent 10 }}
