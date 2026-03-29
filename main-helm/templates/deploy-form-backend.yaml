@@ -1,4 +1,4 @@
-{{- $config := .Values.apps.form-backend -}}
+{{- $config := .Values.apps "form-backend" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
