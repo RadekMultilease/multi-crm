@@ -23,12 +23,5 @@ spec:
         - name: {{ $portConfig.name }}
           containerPort: {{ $portConfig.port }}
         {{- end }}
-        volumeMounts:
-        - name: app-data
-          mountPath: /app
         resources:
           {{- toYaml $config.resources | nindent 10 }}
-      volumes:
-      - name: app-data
-        persistentVolumeClaim:
-          claimName: frontend-pvc
