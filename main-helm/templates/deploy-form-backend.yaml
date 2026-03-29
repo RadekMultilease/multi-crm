@@ -20,8 +20,8 @@ spec:
         image: "{{ $config.image.repository }}:{{ $config.image.tag }}"
         ports:
         {{- range $portConfig := $config.service.ports }}
-        - name: {{ $portConfig.name }}
-          containerPort: {{ $portConfig.port }}
+          - name: {{ $portConfig.name }}
+            containerPort: {{ $portConfig.port }}
         {{- end }}
         resources:
-          {{- toYaml $config.resources | nindent 10 }}
+{{ toYaml $config.resources | nindent 10 }}
