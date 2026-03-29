@@ -23,6 +23,23 @@ apps:
     resources:
       requests: { cpu: "100m", memory: "256Mi" }
       limits: { cpu: "500m", memory: "512Mi" }
+  form-backend:
+    image:
+      repository: radeczu/multi-form-backend
+      tag: arm64
+      replicas: 1
+    service:
+      type: ClusterIP
+      ports:
+        - name: api
+          port: 3000
+    persistence:
+      enabled: false
+    ingress:
+      enabled: false
+    resources:
+      requests: { cpu: "50m", memory: "128Mi" }
+      limits: { cpu: "200m", memory: "256Mi" }
 
   # apitestapp:
   #   image:
