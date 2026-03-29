@@ -1,6 +1,6 @@
 {{- range $appName, $appConfig := .Values.apps }}
 {{- if and $appConfig.persistence $appConfig.persistence.enabled }}
-{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-${1}" | lower | trimPrefix "-" -}}
+{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-$1" | lower | trimPrefix "-" -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
