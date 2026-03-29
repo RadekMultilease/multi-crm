@@ -1,12 +1,12 @@
 {{- range $appName, $appConfig := .Values.apps }}
 {{- if and $appConfig.ingress $appConfig.ingress.enabled }}
+{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-${1}" | lower | trimPrefix "-" -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $appName }}-ingress
+  name: {{ $kebabName }}-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    # Tutaj możesz dodać np. limity wielkości uploadu dla konkretnych apek
     nginx.ingress.kubernetes.io/proxy-body-size: {{ $appConfig.ingress.uploadLimit | default "1m" | quote }}
 spec:
   rules:
@@ -17,9 +17,8 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ $appName }}-service
+            name: {{ $kebabName }}-service
             port:
-              # Teraz używamy wyłącznie zdefiniowanego ingressPort
               number: {{ $appConfig.ingress.ingressPort }}
 ---
 {{- end }}

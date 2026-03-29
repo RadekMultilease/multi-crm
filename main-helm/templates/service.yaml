@@ -1,11 +1,12 @@
 {{- range $appName, $appConfig := .Values.apps }}
+{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-${1}" | lower | trimPrefix "-" -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $appName }}-service
+  name: {{ $kebabName }}-service
 spec:
   selector:
-    app: {{ $appName }}
+    app: {{ $kebabName }}
   type: {{ $appConfig.service.type | default "ClusterIP" }}
   ports:
   {{- range $portConfig := $appConfig.service.ports }}
