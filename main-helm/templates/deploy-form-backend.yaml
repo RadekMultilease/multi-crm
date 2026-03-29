@@ -24,4 +24,4 @@ spec:
             containerPort: {{ $portConfig.port }}
         {{- end }}
         resources:
-{{ toYaml $FormBackend.resources | nindent 10 }}
+{{ toYaml $config.resources | nindent 10 }}
