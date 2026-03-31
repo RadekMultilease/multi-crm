@@ -1,6 +1,7 @@
 {{- range $appName, $appConfig := .Values.apps }}
 {{- if and $appConfig.ingress $appConfig.ingress.enabled }}
-{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-$1" | lower | trimPrefix "-" -}}
+{{- /* Simple, clean, and handles hyphens/dots/caps automatically */ -}}
+{{- $kebabName := $appName | kebabcase -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

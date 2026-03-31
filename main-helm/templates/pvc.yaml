@@ -1,13 +1,19 @@
 {{- range $appName, $appConfig := .Values.apps }}
 {{- if and $appConfig.persistence $appConfig.persistence.enabled }}
-{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-$1" | lower | trimPrefix "-" -}}
+{{- /* Using the cleaner kebabcase function */ -}}
+{{- $kebabName := $appName | kebabcase -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ $appConfig.persistence.claimName | default (printf "%s-pvc" $kebabName) }}
+  labels:
+    app: {{ $kebabName }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $appConfig.persistence.accessMode | default "ReadWriteOnce" }}
+  {{- if $appConfig.persistence.storageClass }}
+  storageClassName: {{ $appConfig.persistence.storageClass }}
+  {{- end }}
   resources:
     requests:
       storage: {{ $appConfig.persistence.size | default "1Gi" }}

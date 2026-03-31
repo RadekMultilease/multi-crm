@@ -1,9 +1,12 @@
 {{- range $appName, $appConfig := .Values.apps }}
-{{- $kebabName := $appName | regexReplaceAll "([A-Z])" "-$1" | lower | trimPrefix "-" -}}
+{{- /* Convert app name to kebab-case consistently */ -}}
+{{- $kebabName := $appName | kebabcase -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ $kebabName }}-service
+  labels:
+    app: {{ $kebabName }}
 spec:
   selector:
     app: {{ $kebabName }}
@@ -13,7 +16,7 @@ spec:
   - name: {{ $portConfig.name }}
     protocol: TCP
     port: {{ $portConfig.port }}
-    targetPort: {{ $portConfig.name }}
+    targetPort: {{ $portConfig.targetPort | default $portConfig.port }}
   {{- end }}
 ---
 {{- end }}
