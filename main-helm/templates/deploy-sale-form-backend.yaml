@@ -1,22 +1,22 @@
-{{- $config := index .Values.apps "form-backend" -}}
+{{- $config := index .Values.apps "sale-form-backend" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: form-backend
+  name: sale-form-backend
   labels:
-    app: form-backend
+    app: sale-form-backend
 spec:
   replicas: {{ $config.image.replicas }}
   selector:
     matchLabels:
-      app: form-backend
+      app: sale-form-form-backend
   template:
     metadata:
       labels:
-        app: form-backend
+        app: sale-form-form-backend
     spec:
       containers:
-      - name: backend-container
+      - name: sale-form-backend-container
         image: "{{ $config.image.repository }}:{{ $config.image.tag }}"
         ports:
         {{- range $portConfig := $config.service.ports }}
