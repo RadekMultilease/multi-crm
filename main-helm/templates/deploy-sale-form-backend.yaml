@@ -9,11 +9,11 @@ spec:
   replicas: {{ $config.image.replicas }}
   selector:
     matchLabels:
-      app: sale-form-form-backend
+      app: sale-form-backend
   template:
     metadata:
       labels:
-        app: sale-form-form-backend
+        app: sale-form-backend
     spec:
       containers:
       - name: sale-form-backend-container
