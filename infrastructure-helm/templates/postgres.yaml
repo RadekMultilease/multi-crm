@@ -23,7 +23,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
-                  key: password
+                  key: DB_PASSWORD
           ports:
             - containerPort: 5432
           volumeMounts:

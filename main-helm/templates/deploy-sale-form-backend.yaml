@@ -18,6 +18,24 @@ spec:
       containers:
       - name: sale-form-backend-container
         image: "{{ $config.image.repository }}:{{ $config.image.tag }}"
+        env:
+          - name: DB_HOST
+            value: "postgres-db"
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-credentials
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-credentials
+                key: DB_PASSWORD
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: postgres-credentials
+                key: DB_NAME
         ports:
         {{- range $portConfig := $config.service.ports }}
           - name: {{ $portConfig.name }}
