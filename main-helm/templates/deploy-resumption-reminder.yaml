@@ -26,10 +26,3 @@ spec:
           value: "http://emailer-engine-service:3000/api/send-templated"
         resources:
           {{- toYaml $config.resources | nindent 10 }}
-        volumeMounts:
-        - name: app-data
-          mountPath: /app/data
-      volumes:
-      - name: app-data
-        persistentVolumeClaim:
-          claimName: resumption-reminder-pvc
