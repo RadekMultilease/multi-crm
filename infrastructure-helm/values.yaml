@@ -18,5 +18,5 @@ resources:
 
 emailer:
   image:
-    repository: radek/email-engine
+    repository: radeczu/email-engine
     tag: arm64
