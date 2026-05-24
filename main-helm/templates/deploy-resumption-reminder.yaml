@@ -1,0 +1,35 @@
+{{- $config := .Values.apps.resumption_reminder -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resumption-reminder
+  labels:
+    app: resumption-reminder
+spec:
+  replicas: {{ $config.image.replicas }}
+  selector:
+    matchLabels:
+      app: resumption-reminder
+  template:
+    metadata:
+      labels:
+        app: resumption-reminder
+    spec:
+      containers:
+      - name: scheduler-container
+        image: "{{ $config.image.repository }}:{{ $config.image.tag }}"
+        # Jeśli potrzebujesz zmiennych środowiskowych, możesz je dodać tutaj:
+        env:
+        - name: API_BASE_URL
+          value: "http://emultilease-backend-service:3000"
+        - name: MAILER_URL
+          value: "http://emailer-engine-service:3000/api/send-templated"
+        resources:
+          {{- toYaml $config.resources | nindent 10 }}
+        volumeMounts:
+        - name: app-data
+          mountPath: /app/data
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: resumption-reminder-pvc

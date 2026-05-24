@@ -28,7 +28,3 @@ spec:
           mountPath: /app
         resources:
           {{- toYaml $config.resources | nindent 10 }}
-      volumes:
-      - name: app-data
-        persistentVolumeClaim:
-          claimName: frontend-pvc
