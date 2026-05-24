@@ -1,4 +1,4 @@
-{{- $config := .Values.apps.resumption_reminder -}}
+{{- $config := index .Values.apps "resumption-reminder" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
