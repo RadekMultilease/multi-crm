@@ -19,4 +19,4 @@ resources:
 emailer:
   image:
     repository: radeczu/email-engine
-    tag: arm64
+    tag: arm64-1.0.1
