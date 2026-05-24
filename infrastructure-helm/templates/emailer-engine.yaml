@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emailer-engine
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emailer-engine
+  template:
+    metadata:
+      labels:
+        app: emailer-engine
+    spec:
+      containers:
+        - name: emailer
+          image: "{{ .Values.emailer.image.repository }}:{{ .Values.emailer.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          # K8s wstrzykuje secrety prosto do process.env w Node.js:
+          env:
+            - name: EMAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-config-secret
+                  key: EMAIL_USER
+            - name: EMAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-config-secret
+                  key: EMAIL_PASS
+            - name: EMAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-config-secret
+                  key: EMAIL_HOST
+            - name: EMAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-config-secret
+                  key: EMAIL_PORT
+          volumeMounts:
+            # PV na historię i logi zostaje bez zmian
+            - name: emailer-data
+              mountPath: /app/history
+              subPath: history
+            - name: emailer-data
+              mountPath: /app/logs
+              subPath: logs
+      volumes:
+        - name: emailer-data
+          persistentVolumeClaim:
+            claimName: emailer-history-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailer-engine
+  namespace: default
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: emailer-engine
