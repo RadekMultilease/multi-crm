@@ -21,7 +21,7 @@ spec:
         # Jeśli potrzebujesz zmiennych środowiskowych, możesz je dodać tutaj:
         env:
         - name: API_BASE_URL
-          value: "http://emultilease-backend-service:3000"
+          value: "http://sale-form-backend-service:3000"
         - name: MAILER_URL
           value: "http://emailer-engine-service:3000/api/send-templated"
         resources:
