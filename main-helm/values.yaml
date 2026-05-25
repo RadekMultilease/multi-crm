@@ -26,7 +26,7 @@ apps:
   sale-form-backend:
     image:
       repository: radeczu/multi-form-backend
-      tag: arm64
+      tag: arm64-1.0.1
       replicas: 1
     service:
       type: ClusterIP
