@@ -23,6 +23,6 @@ spec:
         - name: API_BASE_URL
           value: "http://sale-form-backend-service:3000"
         - name: MAILER_URL
-          value: "http://emailer-engine-service:3000/api/send-templated"
+          value: "http://emailer-engine:3000/api/send-templated"
         resources:
           {{- toYaml $config.resources | nindent 10 }}
