@@ -26,7 +26,7 @@ apps:
   sale-form-backend:
     image:
       repository: radeczu/multi-form-backend
-      tag: arm64-1.0.1
+      tag: arm64-1.0.2
       replicas: 1
     service:
       type: ClusterIP
@@ -43,7 +43,7 @@ apps:
   resumption-reminder:
     image:
       repository: radeczu/resumption-reminder
-      tag: arm64-1.0.3
+      tag: arm64-1.0.4
       replicas: 1
     service:
       type: ClusterIP
