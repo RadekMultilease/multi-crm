@@ -43,7 +43,7 @@ apps:
   resumption-reminder:
     image:
       repository: radeczu/resumption-reminder
-      tag: arm64-1.0.4
+      tag: arm64-1.0.5
       replicas: 1
     service:
       type: ClusterIP
