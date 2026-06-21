@@ -23,10 +23,11 @@ apps:
     resources:
       requests: { cpu: "100m", memory: "256Mi" }
       limits: { cpu: "500m", memory: "512Mi" }
+
   sale-form-backend:
     image:
       repository: radeczu/multi-form-backend
-      tag: arm64-1.0.3
+      tag: arm64-1.0.4
       replicas: 1
     service:
       type: ClusterIP
@@ -40,6 +41,7 @@ apps:
     resources:
       requests: { cpu: "50m", memory: "128Mi" }
       limits: { cpu: "200m", memory: "256Mi" }
+
   resumption-reminder:
     image:
       repository: radeczu/resumption-reminder
